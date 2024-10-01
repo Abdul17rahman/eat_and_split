@@ -10,9 +10,9 @@ export default function SplitBill({ friend, updateFriends }) {
 
   function handleSplit(e) {
     e.preventDefault();
-    const bal = friend.balance + friendExpense;
-    friend.balance = bal;
-    console.log(friend, payer, friendExpense);
+    const bal = payer === "You" ? -friendExpense : expense;
+    console.log(bal);
+    friend.balance = friend.balance + bal;
     updateFriends(friend);
     setBill("");
     setExpense("");
@@ -20,7 +20,7 @@ export default function SplitBill({ friend, updateFriends }) {
 
   return (
     <form className="form-split-bill" onSubmit={handleSplit}>
-      <h2>Split bill</h2>
+      <h2>Split bill with {friend.name}</h2>
 
       <label>💰 Bill Value</label>
       <input
@@ -33,7 +33,11 @@ export default function SplitBill({ friend, updateFriends }) {
       <input
         type="text"
         value={expense}
-        onChange={(e) => setExpense(Number(e.target.value))}
+        onChange={(e) =>
+          setExpense(
+            Number(e.target.value) > bill ? expense : Number(e.target.value)
+          )
+        }
       />
 
       <label>💵 {friend.name} expense</label>

@@ -40,6 +40,7 @@ function App() {
 
   function handleFriend(f) {
     setFriend(f);
+    setOpen(false);
   }
 
   function updateFriends(f) {
@@ -58,7 +59,11 @@ function App() {
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendList friends={friends} onBtnClick={handleFriend} />
+        <FriendList
+          friends={friends}
+          onBtnClick={handleFriend}
+          selectedFriend={friend}
+        />
         {open && <AddFriend onAddFriend={addFriend} onOpen={handleOpen} />}
         <Button onclick={handleOpen}>{open ? "Close" : "Add Friend"}</Button>
       </div>
